@@ -1,0 +1,418 @@
+@import "tailwindcss";
+@import "@fontsource-variable/fraunces/soft.css";
+@import "@fontsource-variable/dm-sans/wght.css";
+@import "@fontsource/norican/latin-400.css";
+
+/*
+  Salete Togni — identidade
+  Conceito: a caixa de doces. Creme de papel, bandeja cacau, forminhas rosa
+  e fita framboesa. O verde e o dourado aparecem só no Natal.
+*/
+@theme {
+  --color-creme: #FBF4EC;
+  --color-creme-2: #F5E8DC;
+  --color-papel: #FFFBF6;
+  --color-rosa: #F4C9CB;
+  --color-rosa-2: #E9AEB3;
+  --color-cacau: #4A2A26;
+  --color-cacau-2: #3A211E;
+  --color-framb: #B23A5B;
+  --color-framb-2: #962F4C;
+  --color-verde: #2F5A4C;
+  --color-verde-2: #264A3F;
+  --color-ouro: #E2B36A;
+  --color-caramelo: #8A5A44;
+
+  --font-display: "Fraunces Variable", "Fraunces", Georgia, "Times New Roman", serif;
+  --font-script: "Norican", "Brush Script MT", cursive;
+  --font-sans: "DM Sans Variable", "DM Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-mola: cubic-bezier(0.2, 0.9, 0.25, 1.15);
+  --ease-saida: cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@layer base {
+  :root {
+    color-scheme: light;
+    --gutter: 18px;
+    --header-h: 64px;
+  }
+  @media (min-width: 768px) {
+    :root {
+      --gutter: 32px;
+      --header-h: 76px;
+    }
+  }
+
+  /* Paints the phone's status-bar band when the page runs edge to edge. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0 0 auto;
+    height: env(safe-area-inset-top, 0px);
+    z-index: 60;
+    background: var(--color-creme);
+  }
+
+  body:has(dialog[open]) {
+    overflow: hidden;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-display);
+    text-wrap: balance;
+  }
+
+  section[id] {
+    scroll-margin-top: calc(env(safe-area-inset-top, 0px) + var(--header-h) + 8px);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--color-framb);
+    outline-offset: 3px;
+    border-radius: 6px;
+  }
+  section:focus {
+    outline: none;
+  }
+
+  ::selection {
+    background: var(--color-rosa);
+    color: var(--color-cacau);
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+  }
+}
+
+/*
+  Page-wide basics stay outside @layer on purpose: unlayered rules win over any
+  reset the host page adds (e.g. when the site is embedded for a preview).
+*/
+html {
+  scroll-behavior: smooth;
+  -webkit-text-size-adjust: 100%;
+  font-variation-settings: "SOFT" 100;
+}
+
+body {
+  margin: 0;
+  background: var(--color-creme);
+  color: var(--color-cacau);
+  font-family: var(--font-sans);
+  font-size: 17px;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+}
+
+/* Page gutter: never under 16px and clear of a phone's side system bar. */
+@utility wrap {
+  width: 100%;
+  max-width: 1200px;
+  margin-inline: auto;
+  padding-left: max(var(--gutter), env(safe-area-inset-left, 0px));
+  padding-right: max(var(--gutter), env(safe-area-inset-right, 0px));
+}
+
+@layer components {
+  .titulo-secao {
+    font-family: var(--font-display);
+    font-weight: 640;
+    font-size: clamp(2.1rem, 1.4rem + 2.6vw, 3.3rem);
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+  }
+
+  .texto-apoio {
+    font-size: 18px;
+    line-height: 1.6;
+    color: var(--color-caramelo);
+    max-width: 36rem;
+  }
+
+  .btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.6rem;
+    min-height: 52px;
+    padding: 0 1.5rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 16px;
+    line-height: 1.1;
+    text-align: center;
+    transition:
+      transform 0.18s var(--ease-mola),
+      background-color 0.2s,
+      color 0.2s,
+      box-shadow 0.2s;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .btn:active {
+    transform: translateY(1px) scale(0.98);
+  }
+  .btn-primario {
+    background: var(--color-framb);
+    color: #fff;
+    box-shadow: 0 10px 24px -12px rgb(178 58 91 / 0.85);
+  }
+  .btn-primario:hover {
+    background: var(--color-framb-2);
+  }
+  .btn-contorno {
+    color: var(--color-cacau);
+    box-shadow: inset 0 0 0 2px var(--color-cacau);
+  }
+  .btn-contorno:hover {
+    background: var(--color-cacau);
+    color: var(--color-creme);
+  }
+  .btn-claro {
+    background: var(--color-creme);
+    color: var(--color-cacau);
+  }
+  .btn-claro:hover {
+    background: #fff;
+  }
+
+  /* Small pill used for filters and choices */
+  .pilula {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    min-height: 42px;
+    padding: 0 1.05rem;
+    border-radius: 999px;
+    font-weight: 600;
+    font-size: 15px;
+    white-space: nowrap;
+    color: var(--color-cacau);
+    box-shadow: inset 0 0 0 1.5px rgb(74 42 38 / 0.28);
+    transition: background-color 0.2s, color 0.2s, box-shadow 0.2s;
+  }
+  .pilula:hover {
+    box-shadow: inset 0 0 0 1.5px var(--color-cacau);
+  }
+  .pilula[aria-pressed="true"],
+  .pilula[aria-checked="true"],
+  .pilula:has(input:checked) {
+    background: var(--color-cacau);
+    color: var(--color-creme);
+    box-shadow: none;
+  }
+  .pilula:has(input:focus-visible) {
+    outline: 3px solid var(--color-framb);
+    outline-offset: 3px;
+  }
+
+  .campo {
+    width: 100%;
+    min-height: 48px;
+    padding: 0.7rem 0.9rem;
+    border-radius: 14px;
+    background: #fff;
+    color: var(--color-cacau);
+    font-size: 16px;
+    box-shadow: inset 0 0 0 1.5px rgb(74 42 38 / 0.22);
+    transition: box-shadow 0.2s;
+  }
+  .campo:hover {
+    box-shadow: inset 0 0 0 1.5px rgb(74 42 38 / 0.45);
+  }
+  .campo:focus {
+    outline: none;
+    box-shadow: inset 0 0 0 2px var(--color-framb);
+  }
+  .rotulo {
+    display: block;
+    font-weight: 600;
+    font-size: 15px;
+    margin-bottom: 0.4rem;
+  }
+
+  /* Lined order-pad paper */
+  .papel-pautado {
+    background-color: var(--color-papel);
+    background-image: repeating-linear-gradient(
+      to bottom,
+      transparent 0 31px,
+      rgb(178 58 91 / 0.13) 31px 32px
+    );
+  }
+  /* Perforated edge of a pad page */
+  .picote {
+    height: 12px;
+    background: radial-gradient(circle at 9px 6px, var(--color-rosa-2) 3.2px, transparent 3.7px) 0 0 / 18px 12px repeat-x;
+  }
+}
+
+/* ---------- Hero: the box of sweets ---------- */
+.bandeja {
+  background:
+    radial-gradient(120% 90% at 25% 0%, rgb(255 255 255 / 0.07), transparent 55%),
+    linear-gradient(160deg, #573330, var(--color-cacau) 45%, var(--color-cacau-2));
+  box-shadow:
+    0 40px 70px -40px rgb(58 33 30 / 0.75),
+    inset 0 2px 0 rgb(255 255 255 / 0.07),
+    inset 0 -4px 0 rgb(0 0 0 / 0.22);
+}
+.cavidade {
+  background: radial-gradient(circle at 50% 46%, rgb(0 0 0 / 0.42), rgb(0 0 0 / 0.16) 60%, transparent 71%);
+}
+.cavidade .forminha-assentada {
+  transform: rotate(var(--giro, 0deg));
+  animation: assentar 0.75s var(--ease-mola) both;
+  animation-delay: calc(var(--i, 0) * 75ms + 120ms);
+}
+@keyframes assentar {
+  from {
+    transform: translateY(-16px) scale(0.9) rotate(var(--giro, 0deg));
+  }
+  to {
+    transform: translateY(0) scale(1) rotate(var(--giro, 0deg));
+  }
+}
+
+/* ---------- Order drawer (native <dialog>) ---------- */
+dialog.gaveta {
+  position: fixed;
+  inset: 0 0 0 auto;
+  margin: 0;
+  width: min(470px, 100vw);
+  max-width: 100vw;
+  height: 100dvh;
+  max-height: 100dvh;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: var(--color-cacau);
+  overflow: visible;
+}
+dialog.gaveta::backdrop {
+  background: rgb(43 22 19 / 0.5);
+  backdrop-filter: blur(2px);
+}
+dialog.gaveta[open] > .painel {
+  animation: entrar-direita 0.38s var(--ease-saida);
+}
+@media (max-width: 639px) {
+  dialog.gaveta {
+    inset: auto 0 0 0;
+    width: 100vw;
+    height: auto;
+    max-height: 94dvh;
+  }
+  dialog.gaveta[open] > .painel {
+    animation: entrar-baixo 0.38s var(--ease-saida);
+  }
+}
+@keyframes entrar-direita {
+  from {
+    transform: translateX(40px);
+    opacity: 0.4;
+  }
+}
+@keyframes entrar-baixo {
+  from {
+    transform: translateY(60px);
+    opacity: 0.4;
+  }
+}
+
+dialog.foto-produto {
+  margin: auto;
+  padding: 0;
+  border: 0;
+  border-radius: 28px;
+  width: min(880px, calc(100vw - 32px));
+  max-height: calc(100dvh - 32px);
+  background: var(--color-papel);
+  color: var(--color-cacau);
+  overflow: auto;
+}
+dialog.foto-produto::backdrop {
+  background: rgb(43 22 19 / 0.6);
+  backdrop-filter: blur(3px);
+}
+dialog.foto-produto[open] {
+  animation: surgir 0.3s var(--ease-saida);
+}
+@keyframes surgir {
+  from {
+    transform: translateY(14px) scale(0.98);
+    opacity: 0;
+  }
+}
+
+/* Highlight after tapping a sweet in the hero box */
+.destacado {
+  animation: piscar 1.6s ease-out;
+}
+@keyframes piscar {
+  0%,
+  35% {
+    box-shadow: 0 0 0 4px var(--color-framb);
+  }
+  100% {
+    box-shadow: 0 0 0 4px transparent;
+  }
+}
+
+.pulo {
+  animation: pulo 0.45s var(--ease-mola);
+}
+@keyframes pulo {
+  40% {
+    transform: scale(1.25);
+  }
+}
+
+/* Catalog filter transition */
+.grade-move,
+.grade-enter-active,
+.grade-leave-active {
+  transition:
+    transform 0.4s var(--ease-saida),
+    opacity 0.25s;
+}
+.grade-enter-from,
+.grade-leave-to {
+  opacity: 0;
+  transform: translateY(10px);
+}
+.grade-leave-active {
+  position: absolute;
+  visibility: hidden;
+}
+
+details > summary {
+  list-style: none;
+}
+details > summary::-webkit-details-marker {
+  display: none;
+}
+
+input[type="range"] {
+  accent-color: var(--color-framb);
+}

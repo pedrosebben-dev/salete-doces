@@ -1,0 +1,14 @@
+{
+  "name": "Salete Togni Doces & Salgados",
+  "short_name": "Salete Togni",
+  "description": "Doces finos e salgados sob encomenda em Encantado/RS.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#FBF4EC",
+  "theme_color": "#4A2A26",
+  "lang": "pt-BR",
+  "icons": [
+    { "src": "icon-192.png", "sizes": "192x192", "type": "image/png" },
+    { "src": "icon-512.png", "sizes": "512x512", "type": "image/png" }
+  ]
+}
